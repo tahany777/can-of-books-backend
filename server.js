@@ -10,6 +10,7 @@ const app = express();
 const addBookController = require('./controllers/addBook.Controller');
 const userController =require('./controllers/user.controller');
 const deleteUserController = require('./controllers/DeleteBook.controller');
+const updateBook = require('./controllers/UpdateBook.controllers');
 app.use(cors());
 const PORT = process.env.PORT;
 app.use(express.json());
@@ -20,10 +21,12 @@ const client = jwksClient({
 
 app.get('/books', userController);
 
-
 app.post('/books', addBookController);
 
 app.delete("/books/:id",deleteUserController);
+
+app.put("/books/:id",updateBook);
+
 const getKey = (header, callback) => {
   client.getSign(header.kid, function(err, key) {
     const signin = key.publicKey || key.rsaPublicKey;
