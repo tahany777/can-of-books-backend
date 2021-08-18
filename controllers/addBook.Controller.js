@@ -1,15 +1,15 @@
-'use strict';
-const user = require('../modulers/user.model');
+"use strict";
+const userM = require("../modulers/user.model");
 
-addBookController = (req,res) => {
-  let {addTitle, addDescr, addStatus,email} = req.body;
-  if(error) {res.send('not found', error)}
-  else {
-    let data = [];
-    const email1 = email;
-    user.findOne({email: email1}, (err, data) => {
-      data.push(addTitle, addDescr, addStatus);
-      res.send(data);
-    })
+const addBookController = (req, res) => {
+  let email = req.body["email"];
+  console.log(req.body);
+  let data = {
+    title: req.body["title"],
+    status :req.body["status"],
+    description : req.body["discription"],
   }
-}
+  let bookUser = new userM(email,data);
+  bookUser.save().then(res.json({message:"user created succefully",user:bookUser}));
+};
+module.exports = addBookController;
